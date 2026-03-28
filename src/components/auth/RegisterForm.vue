@@ -1,5 +1,14 @@
 <template>
-  <form @submit.prevent="handleSubmit" class="login-form">
+  <form @submit.prevent="handleSubmit" class="register-form">
+    <div class="form-group">
+      <BaseInput
+        label="Full Name"
+        type="text"
+        placeholder="Enter your full name"
+        v-model="name"
+      />
+    </div>
+
     <div class="form-group">
       <BaseInput
         label="Email"
@@ -18,10 +27,19 @@
       />
     </div>
 
+    <div class="form-group">
+      <BaseInput
+        label="Confirm Password"
+        type="password"
+        placeholder="Confirm your password"
+        v-model="confirmPassword"
+      />
+    </div>
+
     <p v-if="error" class="error">{{ error }}</p>
 
     <BaseButton type="submit">
-      Login
+      Register
     </BaseButton>
   </form>
 </template>
@@ -32,32 +50,53 @@ import BaseInput from "@/components/shared/BaseInput.vue";
 import BaseButton from "@/components/shared/BaseButton.vue";
 
 export default {
-  name: "LoginForm",
-  components: { BaseInput, BaseButton },
-  emits: ["login"],
-  setup(_, { emit }) {
+  name: "RegisterForm",
+  components: {
+    BaseInput,
+    BaseButton
+  },
+  emits: ["register"],
+  setup(props, { emit }) {
+    const name = ref("");
     const email = ref("");
     const password = ref("");
+    const confirmPassword = ref("");
     const error = ref("");
 
     const handleSubmit = () => {
       error.value = "";
 
-      if (!email.value || !password.value) {
+      if (!name.value || !email.value || !password.value || !confirmPassword.value) {
         error.value = "Please fill in all fields";
         return;
       }
 
-      emit("login", { email: email.value, password: password.value });
+      if (password.value !== confirmPassword.value) {
+        error.value = "Passwords do not match";
+        return;
+      }
+
+      emit("register", {
+        name: name.value,
+        email: email.value,
+        password: password.value
+      });
     };
 
-    return { email, password, error, handleSubmit };
+    return {
+      name,
+      email,
+      password,
+      confirmPassword,
+      error,
+      handleSubmit
+    };
   }
 };
 </script>
 
 <style scoped>
-.login-form {
+.register-form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -77,7 +116,6 @@ export default {
   text-align: center;
 }
 
-/* Ensure BaseButton looks centered and fixed width */
 button {
   width: 100%;
   max-width: 300px;

@@ -1,76 +1,64 @@
 <template>
-  <form @submit.prevent="handleSubmit" class="login-form">
-    <BaseInput
-      label="Email"
-      type="email"
-      placeholder="Enter your email"
-      v-model="email"
-    />
+  <div class="login-container">
+    <div class="login-card">
+      <h1>Login</h1>
 
-    <BaseInput
-      label="Password"
-      type="password"
-      placeholder="Enter your password"
-      v-model="password"
-    />
+      <!-- Use the reusable LoginForm component -->
+      <LoginForm @login="handleLogin" />
 
-    <p v-if="error" class="error">{{ error }}</p>
-
-    <BaseButton type="submit">
-      Login
-    </BaseButton>
-  </form>
+      <p class="register-link">
+        Don't have an account?
+        <router-link to="/register">Register</router-link>
+      </p>
+    </div>
+  </div>
 </template>
 
 <script>
-import { ref } from "vue";
-import BaseInput from "@/components/shared/BaseInput.vue";
-import BaseButton from "@/components/shared/BaseButton.vue";
+import LoginForm from "@/components/auth/LoginForm.vue";
 
 export default {
-  name: "LoginForm",
+  name: "LoginView",
   components: {
-    BaseInput,
-    BaseButton
+    LoginForm
   },
-  emits: ["login"],
-  setup(props, { emit }) {
-    const email = ref("");
-    const password = ref("");
-    const error = ref("");
+  methods: {
+    handleLogin(credentials) {
+      // credentials = { email, password } emitted from LoginForm
+      console.log("Login data:", credentials);
 
-    const handleSubmit = () => {
-      error.value = "";
-
-      if (!email.value || !password.value) {
-        error.value = "Please fill in all fields";
-        return;
+      if (
+        credentials.email === "test@test.com" &&
+        credentials.password === "123456"
+      ) {
+        localStorage.setItem("user", JSON.stringify(credentials));
+        this.$router.push("/dashboard");
+      } else {
+        alert("Invalid credentials");
       }
-
-      emit("login", {
-        email: email.value,
-        password: password.value
-      });
-    };
-
-    return {
-      email,
-      password,
-      error,
-      handleSubmit
-    };
+    }
   }
 };
 </script>
-
 <style scoped>
-.login-form {
-  width: 100%;
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f4f6f8;
+  padding: 20px;
 }
 
-.error {
-  color: red;
-  margin-bottom: 10px;
-  font-size: 14px;
+.login-card {
+  width: 100%;
+  max-width: 400px; /* limit card width */
+  padding: 30px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>

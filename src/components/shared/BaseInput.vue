@@ -6,7 +6,6 @@
       :placeholder="placeholder"
       :value="modelValue"
       @input="$emit('update:modelValue', $event.target.value)"
-      class="input"
     />
   </div>
 </template>
@@ -17,10 +16,7 @@ export default {
   props: {
     modelValue: String,
     label: String,
-    type: {
-      type: String,
-      default: "text"
-    },
+    type: { type: String, default: "text" },
     placeholder: String
   }
 };
@@ -30,17 +26,23 @@ export default {
 .input-group {
   display: flex;
   flex-direction: column;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
+  width: 100%;
 }
 
 label {
   margin-bottom: 5px;
   font-weight: 600;
+  color: #333; /* Ensure labels are always dark */
 }
 
-.input {
+input {
+  width: 100%;
   padding: 10px;
   border-radius: 6px;
   border: 1px solid #ccc;
+  background-color: white;
+  color: #333;
+  font-size: 14px;
 }
 </style>
