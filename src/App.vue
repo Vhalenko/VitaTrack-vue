@@ -1,19 +1,29 @@
 <script setup>
-import { RouterView } from 'vue-router'
+import { RouterView } from "vue-router";
+import AppHeader from "@/components/layout/AppHeader.vue";
+import AppFooter from "@/components/layout/AppFooter.vue";
 </script>
 
 <template>
-  <RouterView />
+  <div class="app">
+    <AppHeader />
+
+    <main>
+      <RouterView />
+    </main>
+
+    <AppFooter />
+  </div>
 </template>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
+main {
+  flex: 1;
 }
 </style>
