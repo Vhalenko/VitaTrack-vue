@@ -3,10 +3,12 @@
     <div class="navbar-inner">
       <div class="brand">
         <span class="brand-icon">◎</span>
-        <span class="brand-name">Caloriq</span>
+        <span class="brand-name">VitaTrack</span>
       </div>
 
       <div class="nav-center">
+        <RouterLink to="/dashboard" class="nav-link" :class="{ active: $route.name === 'Dashboard' }">Dashboard</RouterLink>
+        <RouterLink to="/history"   class="nav-link" :class="{ active: $route.name === 'History'   }">History</RouterLink>
         <span class="nav-date">{{ formattedDate }}</span>
         <div class="date-nav">
           <button class="date-btn" @click="changeDate(-1)" title="Previous day">
@@ -123,6 +125,17 @@ function handleLogout() {
   align-items: center;
   gap: 12px;
 }
+
+.nav-link {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 4px 8px;
+  border-radius: var(--radius);
+  transition: all var(--transition);
+}
+.nav-link:hover { color: var(--text-primary); }
+.nav-link.active { color: var(--text-primary); font-weight: 500; }
 
 .nav-date {
   font-size: 0.9375rem;

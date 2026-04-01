@@ -3,7 +3,7 @@
     <div class="auth-left">
       <div class="brand">
         <span class="brand-icon">◎</span>
-        <span class="brand-name">Caloriq</span>
+        <span class="brand-name">VitaTrack</span>
       </div>
       <div class="tagline">
         <h1>Track what<br>you eat.</h1>
