@@ -26,8 +26,11 @@
       </div>
 
       <div class="nav-right">
-        <span class="user-name">{{ auth.user?.name?.split(' ')[0] }}</span>
-        <button class="logout-btn" @click="handleLogout">
+        <RouterLink to="/profile" class="profile-link">
+          <div class="avatar">{{ initials }}</div>
+          <span class="user-name">{{ auth.user?.name?.split(' ')[0] }}</span>
+        </RouterLink>
+        <button class="logout-btn" @click="handleLogout" title="Sign out">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path d="M6 14H3a1 1 0 01-1-1V3a1 1 0 011-1h3M11 11l3-3-3-3M14 8H6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
@@ -56,6 +59,11 @@ const formattedDate = computed(() => {
   yesterday.setDate(yesterday.getDate() - 1)
   if (foodLog.activeDate === yesterday.toISOString().slice(0, 10)) return 'Yesterday'
   return d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })
+})
+
+const initials = computed(() => {
+  const name = auth.user?.name ?? ''
+  return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
 })
 
 function changeDate(delta) {
@@ -155,8 +163,38 @@ function handleLogout() {
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   justify-content: flex-end;
+}
+
+.profile-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  padding: 4px 8px 4px 4px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  transition: all var(--transition);
+}
+.profile-link:hover {
+  border-color: var(--text-primary);
+  background: var(--bg);
+}
+
+.avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--text-primary);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
 }
 
 .user-name {
