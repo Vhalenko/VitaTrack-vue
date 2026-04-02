@@ -4,6 +4,7 @@ import RegisterView from '@/views/RegisterView.vue'
 import DashboardView from '@/views/DashboardView.vue'
 import ProfileView from '@/views/ProfileView.vue'
 import HistoryView from '@/views/HistoryView.vue'
+import NutritionView from '@/views/NutritionView.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -36,6 +37,11 @@ const router = createRouter({
       path: '/history',
       name: 'history',
       component: HistoryView
+    },
+    {
+      path: '/nutrition',
+      name: 'nutrition',
+      component: NutritionView
     },
   ]
 })

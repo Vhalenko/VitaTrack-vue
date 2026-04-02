@@ -11,7 +11,6 @@
             <h1 class="page-title">History & Progress</h1>
             <p class="text-secondary text-sm">Your nutrition journey over time</p>
           </div>
-          <RouterLink to="/dashboard" class="btn btn-ghost">← Dashboard</RouterLink>
         </div>
 
         <!-- Stats overview -->

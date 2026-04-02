@@ -11,9 +11,6 @@
             <h1 class="page-title">Profile & Goals</h1>
             <p class="text-secondary text-sm">Manage your personal info and calorie targets</p>
           </div>
-          <RouterLink to="/dashboard" class="btn btn-ghost">
-            ← Dashboard
-          </RouterLink>
         </div>
 
         <div v-if="profileStore.loading && !profileStore.profile" class="loading-state">

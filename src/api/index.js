@@ -18,10 +18,17 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (res) => res,
   (err) => {
-    if (err.response?.status === 401) {
+    const status = err.response?.status
+    const url    = err.config?.url ?? ''
+
+    // Only force logout when the session token is rejected,
+    // NOT on login failures or wrong password checks
+    if (status === 401 && url.includes('/auth/me')) {
       localStorage.removeItem('ct_token')
+      localStorage.removeItem('ct_user')
       window.location.href = '/login'
     }
+
     return Promise.reject(err)
   }
 )

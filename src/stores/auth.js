@@ -4,7 +4,7 @@ import { ref, computed } from 'vue'
 import { authAPI } from '@/api'
 
 export const useAuthStore = defineStore('auth', () => {
-  const user  = ref(null)
+  const user  = ref(JSON.parse(localStorage.getItem('ct_user') || 'null'))
   const token = ref(localStorage.getItem('ct_token') || null)
 
   const isLoggedIn = computed(() => !!token.value && !!user.value)
@@ -13,12 +13,14 @@ export const useAuthStore = defineStore('auth', () => {
     token.value = data.token
     user.value  = data.user
     localStorage.setItem('ct_token', data.token)
+    localStorage.setItem('ct_user', JSON.stringify(data.user))
   }
 
   function clearSession() {
     token.value = null
     user.value  = null
     localStorage.removeItem('ct_token')
+    localStorage.removeItem('ct_user')
   }
 
   async function fetchMe() {
