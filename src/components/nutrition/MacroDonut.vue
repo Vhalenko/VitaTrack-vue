@@ -109,7 +109,6 @@ const segments = computed(() => {
   gap: 16px;
 }
 
-/* Container gives the SVG a positioning context for the center label */
 .donut-container {
   position: relative;
   width: 120px;
@@ -123,7 +122,6 @@ const segments = computed(() => {
   display: block;
 }
 
-/* Center label sits in the hole of the donut via absolute positioning */
 .donut-center {
   position: absolute;
   inset: 0;
