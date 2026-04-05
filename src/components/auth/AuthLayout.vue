@@ -37,7 +37,6 @@
   grid-template-columns: 1fr 1fr;
 }
 
-/* Left panel */
 .auth-left {
   background: var(--surface);
   color: var(--text-primary);
@@ -112,7 +111,6 @@
   background: var(--border);
 }
 
-/* Right panel */
 .auth-right {
   background: var(--surface);
   display: flex;
@@ -126,7 +124,6 @@
   max-width: 380px;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .auth-shell {
     grid-template-columns: 1fr;

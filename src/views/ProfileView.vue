@@ -233,14 +233,14 @@ import BmrCard          from '@/components/profile/BmrCard.vue'
 const profileStore = useProfileStore()
 const historyStore = useHistoryStore()
 
-// ── Personal info form ─────────────────────────────
+// ── Personal info form
 const infoForm   = reactive({ name: '', age: '', weight: '', height: '' })
 const infoErrors = reactive({ name: '' })
 const infoSaving = ref(false)
 const infoSuccess = ref('')
 const infoError   = ref('')
 
-// ── Password form ──────────────────────────────────
+// ── Password form
 const passForm = reactive({ current: '', newPass: '' })
 const passErrors = reactive({ current: '', newPass: '' })
 const passSaving = ref(false)
@@ -249,7 +249,7 @@ const passError   = ref('')
 const showCurrentPass = ref(false)
 const showNewPass     = ref(false)
 
-// ── Goals form ─────────────────────────────────────
+// ── Goals form
 const goalsForm = reactive({
   fitness_goal:       'maintain',
   activity_level:     'moderate',
@@ -259,7 +259,7 @@ const goalsSaving = ref(false)
 const goalsSuccess = ref('')
 const goalsError   = ref('')
 
-// ── Computed ───────────────────────────────────────
+// ── Computed
 const initials = computed(() => {
   const name = profileStore.profile?.name ?? ''
   return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
@@ -281,7 +281,7 @@ const calorieSuggestions = computed(() => {
   ]
 })
 
-// ── Populate forms when profile loads ─────────────
+// ── Populate forms when profile loads
 watch(() => profileStore.profile, (p) => {
   if (!p) return
   infoForm.name   = p.name   ?? ''
@@ -295,7 +295,7 @@ watch(() => profileStore.profile, (p) => {
 
 onMounted(() => profileStore.fetchProfile())
 
-// ── Handlers ───────────────────────────────────────
+// ── Handlers
 function flashSuccess(ref, msg) {
   ref.value = msg
   setTimeout(() => { ref.value = '' }, 3000)
@@ -321,7 +321,6 @@ async function saveInfo() {
       height: infoForm.height || null,
     })
 
-    // If weight changed, also save it as a weight log entry
     if (infoForm.weight && +infoForm.weight !== +prevWeight) {
       const today = new Date()
       const dateStr = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`
@@ -406,7 +405,6 @@ async function saveGoals() {
   margin-bottom: 4px;
 }
 
-/* Grid */
 .profile-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -420,7 +418,6 @@ async function saveGoals() {
   gap: 16px;
 }
 
-/* Cards */
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -435,7 +432,6 @@ async function saveGoals() {
   font-weight: 500;
 }
 
-/* Form */
 .form {
   display: flex;
   flex-direction: column;
@@ -498,7 +494,6 @@ async function saveGoals() {
   color: var(--text-primary);
 }
 
-/* Password field */
 .field { position: relative; }
 
 .pass-toggle {
@@ -518,7 +513,6 @@ async function saveGoals() {
 
 .input-error { border-color: var(--error) !important; }
 
-/* Account card */
 .account-card { padding: 20px 24px; }
 
 .account-row {
@@ -547,7 +541,6 @@ async function saveGoals() {
   font-size: 0.9375rem;
 }
 
-/* Loading skeleton */
 .loading-state { display: flex; flex-direction: column; gap: 16px; }
 
 .skeleton {
@@ -561,7 +554,6 @@ async function saveGoals() {
   50% { opacity: 0.5; }
 }
 
-/* Spinner */
 .spinner {
   width: 14px; height: 14px;
   border: 2px solid rgba(255,255,255,0.3);
@@ -572,7 +564,6 @@ async function saveGoals() {
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* Responsive */
 @media (max-width: 720px) {
   .profile-grid { grid-template-columns: 1fr; }
   .form-row     { grid-template-columns: 1fr 1fr; }

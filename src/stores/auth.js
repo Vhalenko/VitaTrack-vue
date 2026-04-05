@@ -29,9 +29,7 @@ export const useAuthStore = defineStore('auth', () => {
       user.value = res.data.user
       localStorage.setItem('ct_user', JSON.stringify(res.data.user))
     } catch {
-      // Token is invalid or expired — clear everything
       clearSession()
-      // Don't stay on the page, let the router guard redirect
     }
   }
 

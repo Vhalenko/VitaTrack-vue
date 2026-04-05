@@ -1,4 +1,3 @@
-// src/api/history.js
 import api from './index.js'
 
 export const historyAPI = {

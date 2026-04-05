@@ -237,7 +237,6 @@ async function confirmAdd() {
 }
 .clear-btn:hover { color: var(--text-primary); }
 
-/* Results */
 .results {
   position: absolute;
   top: calc(100% + 6px);
@@ -399,7 +398,6 @@ async function confirmAdd() {
   font-size: 1rem;
 }
 
-/* Dropdown transition */
 .dropdown-enter-active,
 .dropdown-leave-active {
   transition: opacity 150ms ease, transform 150ms ease;

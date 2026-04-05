@@ -120,7 +120,6 @@ function handleLogout() {
   gap: 16px;
 }
 
-/* LEFT */
 .nav-left {
   display: flex;
   align-items: center;
@@ -188,7 +187,6 @@ function handleLogout() {
   border-radius: 2px 2px 0 0;
 }
 
-/* CENTER */
 .nav-center {
   display: flex;
   align-items: center;
@@ -250,7 +248,6 @@ function handleLogout() {
   background: #d4eddf;
 }
 
-/* RIGHT */
 .nav-right {
   display: flex;
   align-items: center;

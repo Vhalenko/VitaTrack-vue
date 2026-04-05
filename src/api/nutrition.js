@@ -1,4 +1,3 @@
-// src/api/nutrition.js
 import api from './index.js'
 
 export const nutritionAPI = {

@@ -208,7 +208,6 @@ function goToDay() {
   animation: pulse 1.5s ease-in-out infinite;
 }
 
-/* Panel slide */
 .panel-enter-active, .panel-leave-active {
   transition: opacity 250ms ease;
 }

@@ -1,4 +1,3 @@
-// src/api/food.js
 import api from './index.js'
 
 export const foodAPI = {

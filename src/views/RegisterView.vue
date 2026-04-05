@@ -108,7 +108,6 @@ const globalError = ref('')
 const loading  = ref(false)
 const showPass = ref(false)
 
-// Password strength
 const strengthScore = computed(() => {
   const p = form.password
   if (!p) return 0

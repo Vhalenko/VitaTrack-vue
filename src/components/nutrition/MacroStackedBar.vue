@@ -102,13 +102,10 @@ const chartH = computed(() => H - PAD.top - PAD.bottom)
 
 function barX(i) { return PAD.left + i * gap.value + (gap.value - barW.value) / 2 }
 
-// Returns the Y coordinate for the TOP of a segment.
-// kcalBelow = sum of all segments already drawn below this one.
-// SVG Y increases downward, so higher kcal = lower Y value (higher on screen).
 function barY(kcalBelow) {
-  const bottom = PAD.top + chartH.value          // bottom of chart area
+  const bottom = PAD.top + chartH.value
   const filledPx = chartH.value * (+kcalBelow / maxTotal.value)
-  return bottom - filledPx                        // move UP by filled amount
+  return bottom - filledPx
 }
 
 function barH(kcal) {
@@ -117,7 +114,6 @@ function barH(kcal) {
 
 function clampX(x) { return Math.max(64, Math.min(W - 64, x)) }
 
-// API returns log_date, not date
 function getDate(day) { return day.log_date ?? day.date ?? '' }
 
 function formatLabel(day) {

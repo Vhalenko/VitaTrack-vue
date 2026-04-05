@@ -302,7 +302,6 @@ async function submitWeight() {
   font-size: 0.875rem; color: var(--text-secondary);
 }
 
-/* List */
 .wt-list { border-top: 1px solid var(--border); padding-top: 14px; }
 .wt-list-title { margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
 
@@ -318,7 +317,6 @@ async function submitWeight() {
 .wt-date { color: var(--text-secondary); }
 .wt-val  { font-family: 'DM Mono', monospace; font-size: 0.875rem; font-weight: 500; }
 
-/* Slide */
 .slide-enter-active, .slide-leave-active {
   transition: max-height 250ms ease, opacity 250ms ease;
   overflow: hidden; max-height: 200px;

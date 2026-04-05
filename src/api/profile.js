@@ -1,4 +1,3 @@
-// src/api/profile.js
 import api from './index.js'
 
 export const profileAPI = {

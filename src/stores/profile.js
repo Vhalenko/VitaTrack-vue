@@ -32,7 +32,6 @@ export const useProfileStore = defineStore('profile', () => {
     bmr.value     = res.data.bmr
     tdee.value    = res.data.tdee
 
-    // Sync auth store
     const auth = useAuthStore()
     if (auth.user) {
       auth.user = { ...auth.user, ...res.data.user }

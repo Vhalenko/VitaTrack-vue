@@ -44,7 +44,6 @@ const year = new Date().getFullYear()
   gap: 24px;
 }
 
-/* Left */
 .footer-left {
   display: flex;
   align-items: center;
@@ -73,7 +72,6 @@ const year = new Date().getFullYear()
   border-left: 1px solid var(--border);
 }
 
-/* Center nav */
 .footer-nav {
   display: flex;
   align-items: center;
@@ -98,7 +96,6 @@ const year = new Date().getFullYear()
   color: var(--text-secondary);
 }
 
-/* Right */
 .footer-right {
   display: flex;
   justify-content: flex-end;

@@ -116,7 +116,6 @@ async function onChangePeriod(days) {
 
 async function onAddWeight(weight, date) {
   await historyStore.addWeight(weight, date)
-  // Keep profile weight in sync with the latest log
   await profileStore.updateProfile({ weight: parseFloat(weight) })
 }
 </script>
