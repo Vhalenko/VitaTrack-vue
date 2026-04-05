@@ -1,4 +1,3 @@
-// src/stores/history.js
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { historyAPI } from '@/api/history'
@@ -10,10 +9,9 @@ export const useHistoryStore = defineStore('history', () => {
   const trendDays    = ref(30)
   const stats        = ref(null)
   const weightLogs   = ref([])
-  const selectedDay  = ref(null)   // { date, logs, totals }
+  const selectedDay  = ref(null)
   const loading      = ref(false)
 
-  // Map date -> calorie data for quick calendar lookup
   const dayMap = computed(() => {
     const map = {}
     for (const d of monthlyDays.value) map[d.log_date] = d

@@ -77,7 +77,6 @@ export default {
   text-align: center;
 }
 
-/* Ensure BaseButton looks centered and fixed width */
 button {
   width: 100%;
   max-width: 300px;

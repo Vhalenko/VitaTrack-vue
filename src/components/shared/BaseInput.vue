@@ -33,7 +33,7 @@ export default {
 label {
   margin-bottom: 5px;
   font-weight: 600;
-  color: #333; /* Ensure labels are always dark */
+  color: #333;
 }
 
 input {

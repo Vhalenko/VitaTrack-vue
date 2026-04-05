@@ -1,4 +1,3 @@
-// src/stores/foodLog.js
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { foodAPI } from '@/api/food'

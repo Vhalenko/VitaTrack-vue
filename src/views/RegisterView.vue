@@ -218,7 +218,6 @@ async function handleRegister() {
 
 .input-error { border-color: var(--error) !important; }
 
-/* Strength bar */
 .strength-bar {
   height: 2px;
   background: var(--border);

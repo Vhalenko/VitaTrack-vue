@@ -11,6 +11,9 @@
             <h1 class="page-title">Profile & Goals</h1>
             <p class="text-secondary text-sm">Manage your personal info and calorie targets</p>
           </div>
+          <RouterLink to="/dashboard" class="btn btn-ghost">
+            ← Dashboard
+          </RouterLink>
         </div>
 
         <div v-if="profileStore.loading && !profileStore.profile" class="loading-state">
@@ -218,13 +221,15 @@
 <script setup>
 import { ref, reactive, computed, onMounted, watch } from 'vue'
 import { useProfileStore } from '@/stores/profile'
+import { useHistoryStore } from '@/stores/history'
 import AppNavbar        from '@/components/layout/AppNavbar.vue'
-import BaseInput        from '@/components/shared/BaseInput.vue'
+import BaseInput        from '@/components//shared/BaseInput.vue'
 import GoalSelector     from '@/components/profile/GoalSelector.vue'
 import ActivitySelector from '@/components/profile/ActivitySelector.vue'
 import BmrCard          from '@/components/profile/BmrCard.vue'
 
 const profileStore = useProfileStore()
+const historyStore = useHistoryStore()
 
 // ── Personal info form ─────────────────────────────
 const infoForm   = reactive({ name: '', age: '', weight: '', height: '' })
@@ -306,12 +311,21 @@ async function saveInfo() {
 
   infoSaving.value = true
   try {
+    const prevWeight = profileStore.profile?.weight
     await profileStore.updateProfile({
       name:   infoForm.name.trim(),
       age:    infoForm.age    || null,
       weight: infoForm.weight || null,
       height: infoForm.height || null,
     })
+
+    // If weight changed, also save it as a weight log entry
+    if (infoForm.weight && +infoForm.weight !== +prevWeight) {
+      const today = new Date()
+      const dateStr = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`
+      await historyStore.addWeight(infoForm.weight, dateStr)
+    }
+
     flashSuccess(infoSuccess, 'Profile updated successfully')
   } catch (err) {
     infoError.value = err.response?.data?.error ?? 'Failed to save. Please try again.'

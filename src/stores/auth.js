@@ -1,24 +1,23 @@
-// src/stores/auth.js
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { authAPI } from '@/api'
 
 export const useAuthStore = defineStore('auth', () => {
-  const user  = ref(JSON.parse(localStorage.getItem('ct_user') || 'null'))
+  const user = ref(JSON.parse(localStorage.getItem('ct_user') || 'null'))
   const token = ref(localStorage.getItem('ct_token') || null)
 
   const isLoggedIn = computed(() => !!token.value && !!user.value)
 
   function setSession(data) {
     token.value = data.token
-    user.value  = data.user
+    user.value = data.user
     localStorage.setItem('ct_token', data.token)
     localStorage.setItem('ct_user', JSON.stringify(data.user))
   }
 
   function clearSession() {
     token.value = null
-    user.value  = null
+    user.value = null
     localStorage.removeItem('ct_token')
     localStorage.removeItem('ct_user')
   }
@@ -28,8 +27,11 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       const res = await authAPI.me()
       user.value = res.data.user
+      localStorage.setItem('ct_user', JSON.stringify(res.data.user))
     } catch {
+      // Token is invalid or expired — clear everything
       clearSession()
+      // Don't stay on the page, let the router guard redirect
     }
   }
 

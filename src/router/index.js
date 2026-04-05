@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 import LoginView  from '@/views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import DashboardView from '@/views/DashboardView.vue'
@@ -16,34 +17,60 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: LoginView
+      component: LoginView,
+      meta: { guest: true },
     },
     {
       path: '/register',
       name: 'register',
-      component: RegisterView
+      component: RegisterView,
+      meta: { guest: true },
     },
     {
       path: '/dashboard',
       name: 'dashboard',
-      component: DashboardView
+      component: DashboardView,
+      meta: { requiresAuth: true }
     },
     {
       path: '/profile',
       name: 'profile',
-      component: ProfileView
+      component: ProfileView,
+      meta: { requiresAuth: true }
     },
     {
       path: '/history',
       name: 'history',
-      component: HistoryView
+      component: HistoryView,
+      meta: { requiresAuth: true }
     },
     {
       path: '/nutrition',
       name: 'nutrition',
-      component: NutritionView
+      component: NutritionView,
+      meta: { requiresAuth: true }
     },
   ]
+})
+
+router.beforeEach(async (to) => {
+  const auth = useAuthStore()
+
+  if (auth.token && !auth.user) {
+    await auth.fetchMe()
+  }
+
+  if (to.meta.requiresAuth && !auth.token) {
+    return { name: 'login' }
+  }
+
+  if (to.meta.requiresAuth && !auth.user) {
+    return { name: 'login' }
+  }
+
+  if (to.meta.guest && auth.token && auth.user) {
+    return { name: 'dashboard' }
+  }
 })
 
 export default router

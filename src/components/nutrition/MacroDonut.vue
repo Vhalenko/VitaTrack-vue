@@ -106,20 +106,20 @@ const segments = computed(() => {
 .donut-wrap {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 16px;
 }
 
 /* Container gives the SVG a positioning context for the center label */
 .donut-container {
   position: relative;
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   flex-shrink: 0;
 }
 
 .donut-svg {
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   display: block;
 }
 
@@ -196,7 +196,7 @@ const segments = computed(() => {
 .legend-grams {
   font-family: 'DM Mono', monospace;
   font-size: 0.8125rem;
-  min-width: 38px;
+  min-width: 44px;
   text-align: right;
 }
 

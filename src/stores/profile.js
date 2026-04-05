@@ -1,4 +1,3 @@
-// src/stores/profile.js
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { profileAPI } from '@/api/profile'
@@ -18,7 +17,6 @@ export const useProfileStore = defineStore('profile', () => {
       bmr.value     = res.data.bmr
       tdee.value    = res.data.tdee
 
-      // Sync auth store user too
       const auth = useAuthStore()
       if (auth.user) {
         auth.user = { ...auth.user, ...res.data.user }

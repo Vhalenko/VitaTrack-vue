@@ -11,6 +11,7 @@
             <h1 class="page-title">History & Progress</h1>
             <p class="text-secondary text-sm">Your nutrition journey over time</p>
           </div>
+          <RouterLink to="/dashboard" class="btn btn-ghost">← Dashboard</RouterLink>
         </div>
 
         <!-- Stats overview -->
@@ -60,6 +61,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useAuthStore }    from '@/stores/auth'
 import { useHistoryStore } from '@/stores/history'
+import { useProfileStore } from '@/stores/profile'
 import AppNavbar       from '@/components/layout/AppNavbar.vue'
 import StatsBar        from '@/components/history/StatsBar.vue'
 import TrendChart      from '@/components/history/TrendChart.vue'
@@ -69,6 +71,7 @@ import DayDetailPanel  from '@/components/history/DayDetailPanel.vue'
 
 const auth         = useAuthStore()
 const historyStore = useHistoryStore()
+const profileStore = useProfileStore()
 
 const selectedDate  = ref('')
 const trendLoading  = ref(false)
@@ -110,6 +113,8 @@ async function onChangePeriod(days) {
 
 async function onAddWeight(weight, date) {
   await historyStore.addWeight(weight, date)
+  // Keep profile weight in sync with the latest log
+  await profileStore.updateProfile({ weight: parseFloat(weight) })
 }
 </script>
 

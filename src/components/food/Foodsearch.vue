@@ -294,7 +294,6 @@ async function confirmAdd() {
 }
 .dot { opacity: 0.4; }
 
-/* Modal */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -411,7 +410,6 @@ async function confirmAdd() {
   transform: translateY(-6px);
 }
 
-/* Spinner */
 .spinner-sm {
   width: 12px; height: 12px;
   border: 2px solid rgba(0,0,0,0.1);

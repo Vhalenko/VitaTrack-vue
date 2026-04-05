@@ -201,7 +201,6 @@ const totalCalories = computed(() =>
 .food-row:hover .delete-btn { opacity: 1; }
 .delete-btn:hover { color: var(--error); }
 
-/* Slide transition */
 .slide-enter-active,
 .slide-leave-active {
   transition: max-height 250ms ease, opacity 250ms ease;

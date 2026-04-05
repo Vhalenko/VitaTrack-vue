@@ -43,7 +43,7 @@
 
     <!-- SVG chart -->
     <div class="wt-chart-area">
-      <svg v-if="weightPoints.length > 1" :viewBox="`0 0 ${W} ${H}`" preserveAspectRatio="none" class="wt-svg">
+      <svg v-if="weightPoints.length > 0" :viewBox="`0 0 ${W} ${H}`" preserveAspectRatio="none" class="wt-svg">
         <!-- Area -->
         <path :d="weightAreaPath" class="wt-area" />
         <!-- Line -->
@@ -80,7 +80,7 @@
         >{{ l.text }}</text>
       </svg>
 
-      <div v-else-if="!loading" class="wt-empty">
+      <div v-else-if="!loading && !weightLogs.length" class="wt-empty">
         <p>No weight data yet</p>
         <p class="text-xs text-muted">Use the button above to log your weight</p>
       </div>
@@ -112,7 +112,10 @@ const saving    = ref(false)
 const formError = ref('')
 const wtTooltip = ref(null)
 
-const today = new Date().toISOString().slice(0, 10)
+function toLocalDate(d = new Date()) {
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`
+}
+const today = toLocalDate()
 const form  = reactive({ weight: '', date: today })
 
 const W   = 600
@@ -138,12 +141,12 @@ const maxW = computed(() => Math.max(...props.weightLogs.map(l => +l.weight)) + 
 
 const weightPoints = computed(() => {
   const logs = props.weightLogs
-  if (logs.length < 2) return []
+  if (logs.length < 1) return []
   const n      = logs.length
-  const xStep  = (W - PAD * 2) / (n - 1)
+  const xStep  = n > 1 ? (W - PAD * 2) / (n - 1) : 0
   const yRange = maxW.value - minW.value || 1
   return logs.map((l, i) => ({
-    x:      PAD + i * xStep,
+    x:      n > 1 ? PAD + i * xStep : W / 2,  // single entry centered
     y:      PAD + (1 - (+l.weight - minW.value) / yRange) * (H - PAD * 2),
     weight: l.weight,
     date:   l.log_date,

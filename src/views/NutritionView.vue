@@ -5,24 +5,11 @@
     <main class="main">
       <div class="container">
 
-        <!-- Header with date picker -->
+        <!-- Header -->
         <div class="page-header">
           <div>
             <h1 class="page-title">Nutrition</h1>
-            <p class="text-secondary text-sm">Detailed breakdown of your intake</p>
-          </div>
-          <div class="header-right">
-            <div class="date-pick">
-              <label for="date-input" class="text-xs text-muted">Viewing</label>
-              <input
-                id="date-input"
-                type="date"
-                v-model="selectedDate"
-                :max="today"
-                @change="onDateChange"
-                class="date-input"
-              />
-            </div>
+            <p class="text-secondary text-sm">{{ formattedDate }}</p>
           </div>
         </div>
 
@@ -73,9 +60,10 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { computed, onMounted, watch } from 'vue'
 import { useAuthStore }      from '@/stores/auth'
 import { useNutritionStore } from '@/stores/nutrition'
+import { useFoodLogStore }   from '@/stores/foodLog'
 import AppNavbar          from '@/components/layout/AppNavbar.vue'
 import MacroDonut         from '@/components/nutrition/MacroDonut.vue'
 import FoodBreakdownTable from '@/components/nutrition/FoodBreakdownTable.vue'
@@ -85,9 +73,9 @@ import TopFoodsCard       from '@/components/nutrition/TopFoodsCard.vue'
 
 const auth           = useAuthStore()
 const nutritionStore = useNutritionStore()
+const foodLog        = useFoodLogStore()
 
-const today        = new Date().toISOString().slice(0, 10)
-const selectedDate = ref(nutritionStore.activeDate)
+const activeDate = computed(() => foodLog.activeDate)
 
 const dayTotals = computed(() => nutritionStore.dayBreakdown?.totals ?? {
   calories: 0, protein: 0, carbs: 0, fat: 0,
@@ -101,14 +89,14 @@ const dayPercentages = computed(() => nutritionStore.dayBreakdown?.percentages ?
 const dayItems = computed(() => nutritionStore.dayBreakdown?.items ?? [])
 
 const formattedDate = computed(() => {
-  const d = selectedDate.value
-  if (d === today) return 'today'
-  return new Date(d + 'T00:00:00').toLocaleDateString('en-US', {
-    weekday: 'long', month: 'short', day: 'numeric',
+  const now = new Date()
+  const today = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`
+  if (activeDate.value === today) return "Today's breakdown"
+  return new Date(activeDate.value + 'T00:00:00').toLocaleDateString('en-US', {
+    weekday: 'long', month: 'long', day: 'numeric',
   })
 })
 
-// Derive macro goals from calorie goal (rough 30/45/25 split)
 const macroGoals = computed(() => {
   const cal = auth.user?.daily_calorie_goal ?? 2000
   return {
@@ -118,18 +106,18 @@ const macroGoals = computed(() => {
   }
 })
 
+watch(activeDate, (date) => {
+  nutritionStore.fetchDay(date)
+})
+
 onMounted(async () => {
   await Promise.all([
-    nutritionStore.fetchDay(selectedDate.value),
+    nutritionStore.fetchDay(activeDate.value),
     nutritionStore.fetchAverages(7),
     nutritionStore.fetchTopFoods(),
     nutritionStore.fetchMacroTrend(14),
   ])
 })
-
-async function onDateChange() {
-  await nutritionStore.fetchDay(selectedDate.value)
-}
 
 async function onChangePeriod(days) {
   await nutritionStore.fetchAverages(days)
@@ -163,34 +151,6 @@ async function onChangePeriod(days) {
   margin-bottom: 4px;
 }
 
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.date-pick {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 3px;
-}
-
-.date-input {
-  width: auto;
-  font-size: 0.875rem;
-  padding: 6px 10px;
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
-  color: var(--text-primary);
-  font-family: 'DM Sans', sans-serif;
-  cursor: pointer;
-  transition: border-color var(--transition);
-}
-.date-input:focus { outline: none; border-color: var(--text-primary); }
-
-/* Top grid */
 .top-grid {
   display: grid;
   grid-template-columns: 280px 1fr 1fr;
@@ -198,7 +158,6 @@ async function onChangePeriod(days) {
   align-items: start;
 }
 
-/* Loading */
 .skeleton-grid {
   display: grid;
   grid-template-columns: 280px 1fr 1fr;
@@ -213,7 +172,6 @@ async function onChangePeriod(days) {
 }
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
-/* Empty state */
 .empty-day {
   text-align: center;
   padding: 56px 24px;
@@ -234,7 +192,6 @@ async function onChangePeriod(days) {
   .top-grid      { grid-template-columns: 1fr; }
   .skeleton-grid { grid-template-columns: 1fr; }
   .page-header   { flex-direction: column; gap: 12px; }
-  .header-right  { flex-direction: column; align-items: flex-start; }
   .main          { padding: 20px 16px 48px; }
 }
 </style>

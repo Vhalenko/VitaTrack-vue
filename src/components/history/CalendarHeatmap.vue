@@ -74,19 +74,30 @@ const emit = defineEmits(['select', 'change-month'])
 const weekdays    = ['M','T','W','T','F','S','S']
 const legendSteps = [0.15, 0.35, 0.55, 0.75, 1]
 
-const today = new Date().toISOString().slice(0, 10)
+function toLocal(date) {
+  const y = date.getFullYear()
+  const m = String(date.getMonth() + 1).padStart(2, '0')
+  const d = String(date.getDate()).padStart(2, '0')
+  return `${y}-${m}-${d}`
+}
+
+const today = toLocal(new Date())
 
 const monthLabel = computed(() => {
   const [y, m] = props.month.split('-')
   return new Date(+y, +m - 1, 1).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
 })
 
-const isCurrentMonth = computed(() => props.month === new Date().toISOString().slice(0, 7))
+const isCurrentMonth = computed(() => {
+  const now = new Date()
+  const ym  = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`
+  return props.month === ym
+})
 
 const startOffset = computed(() => {
   const [y, m] = props.month.split('-')
   const d = new Date(+y, +m - 1, 1).getDay()
-  return d === 0 ? 6 : d - 1 // Monday-first
+  return d === 0 ? 6 : d - 1
 })
 
 const daysInMonth = computed(() => {
@@ -116,14 +127,14 @@ function cellStyle(day) {
 function prevMonth() {
   const [y, m] = props.month.split('-').map(Number)
   const d = new Date(y, m - 2, 1)
-  emit('change-month', d.toISOString().slice(0, 7))
+  emit('change-month', `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`)
 }
 
 function nextMonth() {
-  if (props.isCurrentMonth) return
+  if (isCurrentMonth.value) return
   const [y, m] = props.month.split('-').map(Number)
   const d = new Date(y, m, 1)
-  emit('change-month', d.toISOString().slice(0, 7))
+  emit('change-month', `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`)
 }
 </script>
 

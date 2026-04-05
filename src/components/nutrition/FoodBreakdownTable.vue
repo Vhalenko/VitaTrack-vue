@@ -104,7 +104,6 @@ const props = defineProps({
   items: { type: Array, default: () => [] },
 })
 
-// Inline sort icon component
 const SortIcon = defineComponent({
   props: { active: Boolean, dir: String },
   setup(p) {
@@ -236,7 +235,6 @@ thead th {
 thead th.col-name,
 thead th.col-meal { text-align: left; }
 
-/* Fixed column widths so headers always align with cells */
 .col-name   { width: auto; min-width: 140px; }
 .col-meal   { width: 100px; }
 .col-num    { width: 72px; }
@@ -252,7 +250,6 @@ thead th.col-meal { text-align: left; }
   letter-spacing: inherit;
   text-transform: inherit;
   padding: 0;
-  /* Right-align numeric header buttons to match cell text-align: right */
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -260,7 +257,6 @@ thead th.col-meal { text-align: left; }
   white-space: nowrap;
   width: 100%;
 }
-/* Left-align the name sort button */
 thead th.col-name .sort-btn { justify-content: flex-start; }
 .sort-btn:hover { color: var(--text-primary); }
 

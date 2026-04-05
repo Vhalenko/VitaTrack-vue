@@ -1,4 +1,3 @@
-// src/stores/nutrition.js
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { nutritionAPI } from '@/api/nutrition'

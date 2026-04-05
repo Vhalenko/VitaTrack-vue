@@ -178,7 +178,6 @@ async function handleLogin() {
 }
 .switch-link a:hover { border-color: var(--text-primary); }
 
-/* Spinner */
 .spinner {
   width: 14px;
   height: 14px;

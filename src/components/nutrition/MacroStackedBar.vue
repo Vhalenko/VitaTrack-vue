@@ -13,30 +13,33 @@
     <div class="chart-area" v-if="trend.length">
       <svg :viewBox="`0 0 ${W} ${H}`" preserveAspectRatio="none" class="stacked-svg">
         <!-- Bars -->
-        <g v-for="(day, i) in chartDays" :key="day.date">
-          <!-- protein -->
+        <g v-for="(day, i) in chartDays" :key="getDate(day)">
+          <!-- fat is at the bottom -->
           <rect
-            :x="barX(i)" :y="barY(day.protein_kcal + day.carbs_kcal + day.fat_kcal, day)"
-            :width="barW" :height="barH(day.protein_kcal, day)"
-            :fill="macros[0].color" rx="0"
+            :x="barX(i)"
+            :y="barY(0) - barH(day.fat_kcal)"
+            :width="barW" :height="barH(day.fat_kcal)"
+            :fill="macros[2].color"
             class="bar-seg"
             @mouseenter="tooltip = { ...day, x: barX(i) + barW / 2 }"
             @mouseleave="tooltip = null"
           />
-          <!-- carbs -->
+          <!-- carbs sits on top of fat -->
           <rect
-            :x="barX(i)" :y="barY(day.carbs_kcal + day.fat_kcal, day)"
-            :width="barW" :height="barH(day.carbs_kcal, day)"
-            :fill="macros[1].color" rx="0"
+            :x="barX(i)"
+            :y="barY(+day.fat_kcal) - barH(day.carbs_kcal)"
+            :width="barW" :height="barH(day.carbs_kcal)"
+            :fill="macros[1].color"
             class="bar-seg"
             @mouseenter="tooltip = { ...day, x: barX(i) + barW / 2 }"
             @mouseleave="tooltip = null"
           />
-          <!-- fat -->
+          <!-- protein sits on top of fat + carbs -->
           <rect
-            :x="barX(i)" :y="barY(day.fat_kcal, day)"
-            :width="barW" :height="barH(day.fat_kcal, day)"
-            :fill="macros[2].color" rx="0"
+            :x="barX(i)"
+            :y="barY(+day.fat_kcal + +day.carbs_kcal) - barH(day.protein_kcal)"
+            :width="barW" :height="barH(day.protein_kcal)"
+            :fill="macros[0].color"
             class="bar-seg"
             @mouseenter="tooltip = { ...day, x: barX(i) + barW / 2 }"
             @mouseleave="tooltip = null"
@@ -45,7 +48,7 @@
           <text
             :x="barX(i) + barW / 2" :y="H - 3"
             text-anchor="middle" class="axis-label"
-          >{{ formatLabel(day.date) }}</text>
+          >{{ formatLabel(day) }}</text>
         </g>
 
         <!-- Tooltip -->
@@ -55,7 +58,7 @@
             width="120" height="72"
             rx="6" fill="var(--text-primary)"
           />
-          <text :x="clampX(tooltip.x)" :y="28"  text-anchor="middle" class="tt-date">{{ formatFull(tooltip.date) }}</text>
+          <text :x="clampX(tooltip.x)" :y="28"  text-anchor="middle" class="tt-date">{{ formatFull(tooltip) }}</text>
           <text :x="clampX(tooltip.x)" :y="44"  text-anchor="middle" class="tt-row tt-p">P: {{ Math.round(tooltip.protein_kcal) }} kcal</text>
           <text :x="clampX(tooltip.x)" :y="57"  text-anchor="middle" class="tt-row tt-c">C: {{ Math.round(tooltip.carbs_kcal) }} kcal</text>
           <text :x="clampX(tooltip.x)" :y="70"  text-anchor="middle" class="tt-row tt-f">F: {{ Math.round(tooltip.fat_kcal) }} kcal</text>
@@ -95,27 +98,36 @@ const maxTotal = computed(() =>
 const n    = computed(() => chartDays.value.length || 1)
 const barW = computed(() => Math.max(4, (W - PAD.left - PAD.right) / n.value * 0.6))
 const gap  = computed(() => (W - PAD.left - PAD.right) / n.value)
+const chartH = computed(() => H - PAD.top - PAD.bottom)
 
 function barX(i) { return PAD.left + i * gap.value + (gap.value - barW.value) / 2 }
 
-function barY(kcalAbove, day) {
-  const chartH = H - PAD.top - PAD.bottom
-  const totalFrac = +day.total_kcal / maxTotal.value
-  const aboveFrac = +kcalAbove / maxTotal.value
-  return PAD.top + chartH * (1 - totalFrac) + chartH * (totalFrac - aboveFrac)
+// Returns the Y coordinate for the TOP of a segment.
+// kcalBelow = sum of all segments already drawn below this one.
+// SVG Y increases downward, so higher kcal = lower Y value (higher on screen).
+function barY(kcalBelow) {
+  const bottom = PAD.top + chartH.value          // bottom of chart area
+  const filledPx = chartH.value * (+kcalBelow / maxTotal.value)
+  return bottom - filledPx                        // move UP by filled amount
 }
 
-function barH(kcal, day) {
-  const chartH = H - PAD.top - PAD.bottom
-  return Math.max(1, chartH * (+kcal / maxTotal.value))
+function barH(kcal) {
+  return Math.max(1, chartH.value * (+kcal / maxTotal.value))
 }
 
 function clampX(x) { return Math.max(64, Math.min(W - 64, x)) }
 
-function formatLabel(d) {
+// API returns log_date, not date
+function getDate(day) { return day.log_date ?? day.date ?? '' }
+
+function formatLabel(day) {
+  const d = getDate(day)
+  if (!d) return ''
   return new Date(d + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
 }
-function formatFull(d) {
+function formatFull(day) {
+  const d = getDate(day)
+  if (!d) return ''
   return new Date(d + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
 }
 </script>

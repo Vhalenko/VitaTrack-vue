@@ -134,14 +134,12 @@ async function handleDelete(id) {
   gap: 28px;
 }
 
-/* Top grid */
 .top-grid {
   display: grid;
   grid-template-columns: 260px 1fr 1fr;
   gap: 16px;
 }
 
-/* Log section */
 .log-section {
   display: flex;
   flex-direction: column;
@@ -166,14 +164,12 @@ async function handleDelete(id) {
   max-width: 440px;
 }
 
-/* Meals grid */
 .meals-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
 }
 
-/* Skeleton */
 .skeleton-wrap {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -193,7 +189,6 @@ async function handleDelete(id) {
   50% { opacity: 0.5; }
 }
 
-/* Empty state */
 .empty-state {
   text-align: center;
   padding: 48px 24px;
@@ -205,7 +200,6 @@ async function handleDelete(id) {
 }
 .empty-state p { margin-bottom: 6px; }
 
-/* Responsive */
 @media (max-width: 900px) {
   .top-grid {
     grid-template-columns: 1fr 1fr;
