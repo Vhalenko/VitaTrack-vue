@@ -56,6 +56,7 @@
         </template>
       </div>
     </main>
+    <AppFooter/>
   </div>
 </template>
 
@@ -65,6 +66,7 @@ import { useAuthStore }      from '@/stores/auth'
 import { useNutritionStore } from '@/stores/nutrition'
 import { useFoodLogStore }   from '@/stores/foodLog'
 import AppNavbar          from '@/components/layout/AppNavbar.vue'
+import AppFooter       from '@/components/layout/AppFooter.vue'
 import MacroDonut         from '@/components/nutrition/MacroDonut.vue'
 import FoodBreakdownTable from '@/components/nutrition/FoodBreakdownTable.vue'
 import MacroStackedBar    from '@/components/nutrition/MacroStackedBar.vue'

@@ -35,7 +35,7 @@ defineProps({
 <style scoped>
 .bmr-card {
   background: var(--accent-light);
-  border: 1px solid #c3e6d3;
+  border: 1px solid #1f4a30;
   border-radius: var(--radius-lg);
   padding: 20px;
 }
@@ -91,7 +91,7 @@ defineProps({
 .bmr-divider {
   width: 1px;
   height: 40px;
-  background: #c3e6d3;
+  background: #1f4a30;
 }
 
 .bmr-note {

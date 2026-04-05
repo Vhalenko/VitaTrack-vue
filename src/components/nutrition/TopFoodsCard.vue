@@ -118,9 +118,9 @@ defineProps({
   font-weight: 500;
 }
 
-.macro-tag.protein { background: #e8f4ee; color: var(--accent); }
-.macro-tag.carbs   { background: #fef3e8; color: #e67e22; }
-.macro-tag.fat     { background: #fef0ee; color: var(--error); }
+.macro-tag.protein { background: var(--accent-light); color: var(--accent); }
+.macro-tag.carbs   { background: #2a1e10; color: #e67e22; }
+.macro-tag.fat     { background: var(--error-light); color: var(--error); }
 
 .foods-empty {
   text-align: center;

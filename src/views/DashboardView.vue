@@ -59,6 +59,7 @@
 
       </div>
     </main>
+    <AppFooter />
   </div>
 </template>
 
@@ -72,6 +73,7 @@ import MacroBar     from '@/components/layout/MacroBar.vue'
 import WeeklyChart  from '@/components/food/Weeklychart .vue'
 import FoodSearch   from '@/components/food/Foodsearch.vue'
 import MealSection  from '@/components/food/Mealsection.vue'
+import AppFooter from '@/components/layout/AppFooter.vue'
 
 const auth    = useAuthStore()
 const foodLog = useFoodLogStore()

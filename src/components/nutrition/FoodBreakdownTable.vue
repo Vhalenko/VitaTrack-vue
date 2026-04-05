@@ -104,6 +104,7 @@ const props = defineProps({
   items: { type: Array, default: () => [] },
 })
 
+// Inline sort icon component
 const SortIcon = defineComponent({
   props: { active: Boolean, dir: String },
   setup(p) {
@@ -235,6 +236,7 @@ thead th {
 thead th.col-name,
 thead th.col-meal { text-align: left; }
 
+/* Fixed column widths so headers always align with cells */
 .col-name   { width: auto; min-width: 140px; }
 .col-meal   { width: 100px; }
 .col-num    { width: 72px; }
@@ -250,6 +252,7 @@ thead th.col-meal { text-align: left; }
   letter-spacing: inherit;
   text-transform: inherit;
   padding: 0;
+  /* Right-align numeric header buttons to match cell text-align: right */
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -257,6 +260,7 @@ thead th.col-meal { text-align: left; }
   white-space: nowrap;
   width: 100%;
 }
+/* Left-align the name sort button */
 thead th.col-name .sort-btn { justify-content: flex-start; }
 .sort-btn:hover { color: var(--text-primary); }
 
@@ -295,10 +299,10 @@ td.col-meal { text-align: left; }
   border: 1px solid var(--border);
   color: var(--text-muted);
 }
-.meal-badge.breakfast { background: #fff8e6; border-color: #f5d98a; color: #a07000; }
-.meal-badge.lunch     { background: #e8f4ee; border-color: #c3e6d3; color: var(--accent); }
-.meal-badge.dinner    { background: #f0eafa; border-color: #d8c8f0; color: #6b3fa0; }
-.meal-badge.snack     { background: #fef0ee; border-color: #f5c6c2; color: var(--error); }
+.meal-badge.breakfast { background: #2a2010; border-color: #5a4010; color: #d4a030; }
+.meal-badge.lunch     { background: var(--accent-light); border-color: #1f4a30; color: var(--accent); }
+.meal-badge.dinner    { background: #1e1628; border-color: #3a2858; color: #a070d0; }
+.meal-badge.snack     { background: var(--error-light); border-color: #4a2020; color: var(--error); }
 
 .mono { font-family: 'DM Mono', monospace; }
 .fw   { font-weight: 500; color: var(--text-primary); }

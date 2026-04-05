@@ -54,6 +54,8 @@
       :loading="dayLoading"
       @close="selectedDate = ''; historyStore.selectedDay = null"
     />
+
+    <AppFooter/>
   </div>
 </template>
 
@@ -63,6 +65,7 @@ import { useAuthStore }    from '@/stores/auth'
 import { useHistoryStore } from '@/stores/history'
 import { useProfileStore } from '@/stores/profile'
 import AppNavbar       from '@/components/layout/AppNavbar.vue'
+import AppFooter       from '@/components/layout/AppFooter.vue'
 import StatsBar        from '@/components/history/StatsBar.vue'
 import TrendChart      from '@/components/history/TrendChart.vue'
 import CalendarHeatmap from '@/components/history/CalendarHeatmap.vue'

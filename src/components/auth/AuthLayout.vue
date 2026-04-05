@@ -37,9 +37,10 @@
   grid-template-columns: 1fr 1fr;
 }
 
+/* Left panel */
 .auth-left {
-  background: var(--text-primary);
-  color: #fff;
+  background: var(--surface);
+  color: var(--text-primary);
   padding: 48px 56px;
   display: flex;
   flex-direction: column;
@@ -62,6 +63,7 @@
   font-size: 1.125rem;
   font-weight: 500;
   letter-spacing: -0.01em;
+  color: var(--text-primary);
 }
 
 .tagline h1 {
@@ -69,12 +71,12 @@
   font-weight: 300;
   line-height: 1.15;
   letter-spacing: -0.03em;
-  color: #fff;
+  color: var(--text-primary);
   margin-bottom: 20px;
 }
 
 .tagline p {
-  color: rgba(255,255,255,0.5);
+  color: var(--text-secondary);
   font-size: 0.9375rem;
   max-width: 300px;
   line-height: 1.6;
@@ -92,13 +94,13 @@
   font-size: 1.5rem;
   font-weight: 400;
   letter-spacing: -0.02em;
-  color: #fff;
+  color: var(--text-primary);
 }
 
 .stat-label {
   display: block;
   font-size: 0.75rem;
-  color: rgba(255,255,255,0.4);
+  color: var(--text-muted);
   margin-top: 4px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -107,12 +109,12 @@
 .stat-divider {
   width: 1px;
   height: 36px;
-  background: rgba(255,255,255,0.15);
+  background: var(--border);
 }
 
 /* Right panel */
 .auth-right {
-  background: var(--bg);
+  background: var(--surface);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -124,6 +126,7 @@
   max-width: 380px;
 }
 
+/* Responsive */
 @media (max-width: 768px) {
   .auth-shell {
     grid-template-columns: 1fr;

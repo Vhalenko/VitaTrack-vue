@@ -6,7 +6,7 @@
       <div class="nav-left">
         <div class="brand">
           <span class="brand-icon">◎</span>
-          <span class="brand-name">Caloriq</span>
+          <span class="brand-name">VitaTrack</span>
         </div>
         <div class="nav-divider"></div>
         <div class="nav-links">
@@ -25,6 +25,7 @@
         </button>
         <div class="date-display">
           <span class="date-label">{{ formattedDate }}</span>
+          <button v-if="!isToday" class="today-chip" @click="goToday">Today</button>
         </div>
         <button class="arrow-btn" @click="changeDate(1)" :disabled="isToday" title="Next day">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -277,8 +278,8 @@ function handleLogout() {
   width: 26px;
   height: 26px;
   border-radius: 50%;
-  background: var(--text-primary);
-  color: #fff;
+  background: var(--accent);
+  color: var(--bg);
   display: flex;
   align-items: center;
   justify-content: center;

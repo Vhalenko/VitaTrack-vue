@@ -215,6 +215,7 @@
         </div>
       </div>
     </main>
+    <AppFooter/>
   </div>
 </template>
 
@@ -223,7 +224,8 @@ import { ref, reactive, computed, onMounted, watch } from 'vue'
 import { useProfileStore } from '@/stores/profile'
 import { useHistoryStore } from '@/stores/history'
 import AppNavbar        from '@/components/layout/AppNavbar.vue'
-import BaseInput        from '@/components//shared/BaseInput.vue'
+import AppFooter       from '@/components/layout/AppFooter.vue'
+import BaseInput        from '@/components/shared/BaseInput.vue'
 import GoalSelector     from '@/components/profile/GoalSelector.vue'
 import ActivitySelector from '@/components/profile/ActivitySelector.vue'
 import BmrCard          from '@/components/profile/BmrCard.vue'
@@ -529,8 +531,8 @@ async function saveGoals() {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: var(--text-primary);
-  color: #fff;
+  background: var(--accent);
+  color: var(--bg);
   display: flex;
   align-items: center;
   justify-content: center;

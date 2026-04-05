@@ -97,7 +97,7 @@ const isCurrentMonth = computed(() => {
 const startOffset = computed(() => {
   const [y, m] = props.month.split('-')
   const d = new Date(+y, +m - 1, 1).getDay()
-  return d === 0 ? 6 : d - 1
+  return d === 0 ? 6 : d - 1 // Monday-first
 })
 
 const daysInMonth = computed(() => {
@@ -219,8 +219,8 @@ function nextMonth() {
 }
 
 .cal-cell.today .day-num {
-  background: var(--text-primary);
-  color: #fff;
+  background: var(--accent);
+  color: var(--bg);
   border-radius: 50%;
   width: 22px; height: 22px;
   display: flex; align-items: center; justify-content: center;
